@@ -1,5 +1,8 @@
 console.log("Ola mundo");
 
-let nome = "thiago";
+let firstName = "thiago";
+let lastName = "brito";
 
-console.log("meu nome é " + nome);
+
+console.log(`meu nome é ${firstName} ${lastName}`);
+console.log(lastName);
