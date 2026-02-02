@@ -1,8 +1,12 @@
-console.log("Ola mundo");
+const price = 30
 
-let firstName = "thiago";
-let lastName = "brito";
+console.log("preco: " + price)
 
+let pen = {
+    itemColor: "blue",
+    intemPrice: 5,
+    intemAvailable: true
+    
+}
 
-console.log(`meu nome é ${firstName} ${lastName}`);
-console.log(lastName);
+console.log(pen)   
