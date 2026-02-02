@@ -21,4 +21,13 @@ function calculo(num1, num2) {
 
 let result_funcition = calculo(10, 20)
 console.log(result_funcition)
+
+
+
+function porcentagem10(num1) {
+    return  num1-(num1 * 0.10)
+}
+
+let porcentagem_resultado = porcentagem10(100)
+console.log(porcentagem_resultado)
     
