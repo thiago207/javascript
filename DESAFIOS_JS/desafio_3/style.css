@@ -1,0 +1,385 @@
+/* ==================== RESET E IMPORTAÇÃO ==================== */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Cores */
+    --primary-color: #EE4477;
+    --primary-hover: #ff5c8a;
+    --primary-active: #d93d68;
+    --background-dark: #1a1a1a;
+    --wrapper-bg: #262626;
+    --input-bg: #f5f5f5;
+    --text-light: #ffffff;
+    --text-dark: #333;
+    --shadow-color: rgba(0, 0, 0, 0.4);
+    --focus-glow: rgba(238, 68, 119, 0.5);
+    
+    /* Gradiente de fundo */
+    --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    
+    /* Espaçamentos */
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 25px;
+    --spacing-2xl: 40px;
+    
+    /* Bordas */
+    --border-radius-sm: 6px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+}
+
+/* ==================== BODY ==================== */
+body {
+    background: var(--bg-gradient);
+    min-height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de partículas no fundo */
+body::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: float 20s linear infinite;
+    opacity: 0.3;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(-50px, -50px); }
+}
+
+/* ==================== WRAPPER ==================== */
+.wrapper {
+    width: 100%;
+    max-width: 450px;
+    background: var(--wrapper-bg);
+    padding: var(--spacing-2xl) 45px;
+    border-radius: var(--border-radius-lg);
+    color: var(--text-light);
+    text-align: center;
+    box-shadow: 0 25px 50px var(--shadow-color);
+    position: relative;
+    z-index: 1;
+    animation: slideUp 0.6s ease-out;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Brilho sutil no topo */
+.wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+}
+
+/* ==================== TÍTULO ==================== */
+.wrapper h2 {
+    text-transform: uppercase;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin-bottom: 30px;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+}
+
+.wrapper h2::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 2px;
+}
+
+/* ==================== INPUTS NUMÉRICOS ==================== */
+input[type="number"] {
+    width: calc(50% - 8px);
+    height: 55px;
+    margin: 5px 4px;
+    padding: 0 15px;
+    font-size: 24px;
+    font-weight: 600;
+    border-radius: var(--border-radius-sm);
+    border: 2px solid transparent;
+    outline: none;
+    text-align: center;
+    background: var(--input-bg);
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif;
+}
+
+input[type="number"]:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px var(--focus-glow);
+    transform: scale(1.02);
+}
+
+input[type="number"]:hover {
+    background: #fff;
+}
+
+/* Remove setas do input number */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+/* ==================== ÁREA DE OPERAÇÕES ==================== */
+.operacoes {
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: var(--border-radius-md);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Container para cada operação */
+.operacoes label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: var(--border-radius-sm);
+    transition: all 0.3s ease;
+}
+
+.operacoes label:hover {
+    background: rgba(238, 68, 119, 0.15);
+    transform: scale(1.05);
+}
+
+/* ==================== INPUTS RADIO ==================== */
+input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+input[type="radio"]:hover {
+    transform: scale(1.15);
+}
+
+input[type="radio"]:checked {
+    filter: drop-shadow(0 0 5px var(--primary-color));
+}
+
+/* ==================== SÍMBOLOS DAS OPERAÇÕES ==================== */
+b {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text-light);
+    user-select: none;
+}
+
+/* ==================== BOTÃO CALCULAR ==================== */
+button {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    border: none;
+    color: var(--text-light);
+    padding: 14px 40px;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 700;
+    border-radius: var(--border-radius-md);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: var(--spacing-lg);
+    box-shadow: 0 8px 20px rgba(238, 68, 119, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efeito de brilho no botão */
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+button:hover {
+    background: linear-gradient(135deg, var(--primary-hover), var(--primary-color));
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(238, 68, 119, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 5px 15px rgba(238, 68, 119, 0.3);
+}
+
+/* ==================== ÁREA DE RESULTADO ==================== */
+#resultArea {
+    margin-top: 25px;
+    padding: 20px;
+    font-size: 32px;
+    font-weight: 700;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--border-radius-md);
+    background: linear-gradient(135deg, rgba(238, 68, 119, 0.15), rgba(255, 92, 138, 0.15));
+    border: 2px solid rgba(238, 68, 119, 0.3);
+    color: var(--primary-color);
+    animation: fadeIn 0.5s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+#resultArea::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    animation: shine 2s infinite;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes shine {
+    to {
+        left: 100%;
+    }
+}
+
+/* ==================== RESPONSIVIDADE ==================== */
+@media (max-width: 500px) {
+    .wrapper {
+        padding: 30px 25px;
+        max-width: 100%;
+    }
+    
+    .wrapper h2 {
+        font-size: 22px;
+        letter-spacing: 3px;
+    }
+    
+    input[type="number"] {
+        width: calc(50% - 6px);
+        height: 50px;
+        font-size: 20px;
+        margin: 4px 3px;
+    }
+    
+    .operacoes {
+        gap: 8px;
+        padding: 15px 10px;
+    }
+    
+    .operacoes label {
+        padding: 8px 10px;
+    }
+    
+    b {
+        font-size: 26px;
+    }
+    
+    button {
+        width: 100%;
+        padding: 14px 20px;
+        font-size: 14px;
+    }
+    
+    #resultArea {
+        font-size: 26px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 360px) {
+    input[type="number"] {
+        font-size: 18px;
+        height: 45px;
+    }
+    
+    .operacoes {
+        flex-wrap: wrap;
+    }
+    
+    b {
+        font-size: 22px;
+    }
+    
+    #resultArea {
+        font-size: 22px;
+    }
+}

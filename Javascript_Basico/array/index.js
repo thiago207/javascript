@@ -61,3 +61,17 @@ let clientes = [ 'João', 'Maria', 'Pedro', 'Ana' ];
 let clientJoins = clientes.join(', ');
 
 console.log(clientJoins); // "João, Maria, Pedro, Ana"
+
+const tempLondon = [15, 17, 20, 22, 18, -22];
+
+const tempPositive = tempLondon.every(function(value){
+    return value >= 0
+})
+
+console.log(tempPositive);
+
+const tempLondres = [15, 17, 20, 22, 18, -22];
+
+const tempPositivo = tempLondres.filter(value => value >= 0);
+
+console.log(tempPositivo);
