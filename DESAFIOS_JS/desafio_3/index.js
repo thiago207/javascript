@@ -30,9 +30,8 @@ function controlarInputs() {
 
     if (raizMarcada) {
         num2.value = "";
-        num2.style.display = "none";
-        num2.disabled = true;
+        num2.classList.add("hidden");
     } else {
-        num2.disabled = false;
+        num2.classList.remove("hidden");
     }
 }

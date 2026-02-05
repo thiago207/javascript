@@ -36,6 +36,10 @@
     --border-radius-lg: 12px;
 }
 
+.hidden {
+    display: none;
+}
+
 /* ==================== BODY ==================== */
 body {
     background: var(--bg-gradient);
