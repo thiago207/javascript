@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="description" content="Calculadora de gorjeta rápida e fácil - Quick Tip" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Quick Tip - Calculadora de Gorjeta</title>
+  </head>
+  <body>
+    <main oninput="update()">
+      <h1>
+        Quick Tip
+      </h1>
+      
+      <!-- Seção de Conta e Gorjeta -->
+      <section class="tip-section">
+        <div class="bill">
+          <label for="yourBill">Valor da Conta</label>
+          <div class="input-wrapper">
+            <span class="currency">R$</span>
+            <input 
+              type="number" 
+              placeholder="0,00" 
+              id="yourBill"
+              min="0"
+              step="0.01"
+              aria-label="Valor da conta"
+            />
+          </div>
+        </div>
+        
+        <div class="tip-control">
+          <div class="space-between">
+            <label for="tipInput">Gorjeta</label>
+            <span id="tipPercent" class="percentage">0%</span>
+          </div>
+          <input 
+            type="range" 
+            value="0" 
+            min="0"
+            max="100"
+            step="1"
+            id="tipInput" 
+            class="range"
+            aria-label="Porcentagem de gorjeta"
+          />
+        </div>
+        
+        <div class="space-between result-row">
+          <span class="label">Gorjeta</span>
+          <span id="tipValue" class="value"></span>
+        </div>
+        
+        <hr class="divider" />
+        
+        <div class="space-between total">
+          <span class="label">Total</span>
+          <span id="totalWithTip" class="value"></span>
+        </div>
+      </section>
+
+      <!-- Seção de Divisão -->
+      <section class="split-section">
+        <div class="split-control">
+          <div class="space-between">
+            <label for="splitInput">Dividir Conta</label>
+            <span id="splitValue" class="split-count">
+              <span class="icon-small">👥</span>
+              <span class="number">1</span>
+            </span>
+          </div>
+          <input
+            type="range"
+            min="1"
+            max="10"
+            value="1"
+            id="splitInput"
+            class="range"
+            aria-label="Número de pessoas"
+          />
+        </div>
+        
+        <div class="space-between result-row">
+          <span class="label">Valor por Pessoa</span>
+          <span id="billEach" class="value highlight"></span>
+        </div>
+      </section>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>
