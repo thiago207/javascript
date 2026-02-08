@@ -1,0 +1,559 @@
+:root {
+  --green: #5ed68a;
+  --green-hover: #4ec478;
+  --red: #e63946;
+  --red-hover: #d32f3c;
+  --background: #ffffff;
+  --gradient-1: #343e63;
+  --gradient-2: #2a3352;
+  --text-dark: #1f2933;
+  --text-muted: #52606d;
+  --border-light: #cbd2d9;
+  --shadow: rgba(0, 0, 0, 0.1);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+  
+  --space-xs: 0.8rem;
+  --space-sm: 1.6rem;
+  --space-md: 2.4rem;
+  --space-lg: 4rem;
+  
+  --radius-sm: 0.8rem;
+  --radius-md: 1.2rem;
+  --radius-lg: 2rem;
+  
+  --transition-fast: 150ms ease;
+  --transition-base: 250ms ease;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+
+  background: radial-gradient(
+    circle at top,
+    var(--gradient-1),
+    var(--gradient-2)
+  );
+
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+/* Partículas animadas no fundo */
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: float 20s infinite ease-in-out;
+  pointer-events: none;
+}
+
+body::before {
+  background: var(--green);
+  top: -100px;
+  left: -100px;
+  animation-delay: 0s;
+}
+
+body::after {
+  background: var(--red);
+  bottom: -100px;
+  right: -100px;
+  animation-delay: 10s;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(50px, -50px) scale(1.1);
+  }
+  66% {
+    transform: translate(-30px, 30px) scale(0.9);
+  }
+}
+
+/* Container principal */
+main {
+  width: 100%;
+  max-width: 60rem;
+  position: relative;
+  z-index: 1;
+
+  background: var(--background);
+  border: 6px solid var(--red);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+
+  box-shadow: 
+    0 20px 60px var(--shadow),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+
+  text-align: center;
+  color: var(--text-dark);
+  
+  animation: slideInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Welcome Screen */
+#welcomeScreen h2 {
+  font-size: clamp(2.6rem, 5vw, 3.6rem);
+  font-weight: 700;
+  margin-bottom: var(--space-md);
+  line-height: 1.3;
+  
+  background: linear-gradient(135deg, var(--gradient-1), var(--red));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  
+  animation: gradientShift 4s ease infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Game Area */
+#gameArea section {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Títulos */
+h3 {
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--text-dark);
+  
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.02);
+  }
+}
+
+/* Input */
+input {
+  width: 100%;
+  max-width: 25rem;
+
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-md);
+
+  padding: 1.4rem 2rem;
+  margin: var(--space-md) 0;
+
+  text-align: center;
+  font-size: 2.4rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-dark);
+
+  transition: all var(--transition-base);
+  position: relative;
+}
+
+input::placeholder {
+  color: #a0aec0;
+  font-weight: 400;
+}
+
+input:hover {
+  border-color: #a0aec0;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+input:focus {
+  outline: none;
+  border-color: var(--green);
+  box-shadow: 
+    0 0 0 4px rgba(94, 214, 138, 0.15),
+    0 6px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px) scale(1.02);
+  
+  animation: inputGlow 2s ease-in-out infinite;
+}
+
+@keyframes inputGlow {
+  0%, 100% {
+    box-shadow: 
+      0 0 0 4px rgba(94, 214, 138, 0.15),
+      0 6px 16px rgba(0, 0, 0, 0.1);
+  }
+  50% {
+    box-shadow: 
+      0 0 0 6px rgba(94, 214, 138, 0.25),
+      0 8px 20px rgba(0, 0, 0, 0.15);
+  }
+}
+
+/* Estados especiais do input */
+input.shake {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+  border-color: var(--red);
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translateX(-5px);
+  }
+  20%, 80% {
+    transform: translateX(5px);
+  }
+  30%, 50%, 70% {
+    transform: translateX(-10px);
+  }
+  40%, 60% {
+    transform: translateX(10px);
+  }
+}
+
+input.correct {
+  border-color: var(--green);
+  animation: correctBounce 0.6s ease;
+}
+
+@keyframes correctBounce {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.1);
+    background: rgba(94, 214, 138, 0.1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Botão */
+button {
+  cursor: pointer;
+  border: none;
+  padding: 1.6rem 3.2rem;
+  border-radius: var(--radius-md);
+  margin-top: var(--space-md);
+  width: 100%;
+  max-width: 30rem;
+
+  font-size: 1.6rem;
+  font-weight: 700;
+  font-family: inherit;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+
+  background: linear-gradient(135deg, var(--red), var(--red-hover));
+  box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+
+  position: relative;
+  overflow: hidden;
+  transition: all var(--transition-base);
+}
+
+/* Efeito ripple nos botões */
+button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(230, 57, 70, 0.4);
+}
+
+button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
+}
+
+/* Animação de clique */
+button:active::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  to {
+    transform: translate(-50%, -50%) scale(2);
+    opacity: 0;
+  }
+}
+
+/* Stats section */
+.stats {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-md);
+  border-top: 2px solid #e4e7eb;
+  text-align: left;
+}
+
+.info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.2rem;
+  padding: var(--space-sm);
+  border-radius: var(--radius-sm);
+  
+  background: linear-gradient(135deg, #f7fafc, #edf2f7);
+  
+  transition: all var(--transition-base);
+  animation: slideInLeft 0.5s ease backwards;
+}
+
+.info:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.info:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.info:hover {
+  background: linear-gradient(135deg, #edf2f7, #e2e8f0);
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.info p {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.info span {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  
+  min-width: 3rem;
+  text-align: right;
+}
+
+/* Animação quando os números mudam */
+.info span.updated {
+  animation: numberPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes numberPop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+    color: var(--green);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  body {
+    padding: 1rem;
+  }
+
+  main {
+    padding: 2.4rem 2rem;
+    border-width: 4px;
+  }
+
+  h2 {
+    font-size: 2.4rem;
+  }
+
+  input {
+    max-width: 100%;
+    font-size: 2rem;
+    padding: 1.2rem 1.6rem;
+  }
+
+  button {
+    max-width: 100%;
+    padding: 1.4rem 2.4rem;
+    font-size: 1.5rem;
+  }
+
+  .info {
+    padding: 1.2rem;
+  }
+
+  .info p {
+    font-size: 1.3rem;
+  }
+
+  .info span {
+    font-size: 1.8rem;
+  }
+}
+
+/* Preferência de movimento reduzido */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Loading state (opcional para uso futuro) */
+.loading {
+  pointer-events: none;
+  opacity: 0.6;
+  position: relative;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Efeito de brilho no hover do main */
+main::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.03),
+    transparent
+  );
+  transform: rotate(45deg);
+  pointer-events: none;
+  animation: shine 8s infinite;
+}
+
+@keyframes shine {
+  0% {
+    top: -50%;
+    left: -50%;
+  }
+  100% {
+    top: 150%;
+    left: 150%;
+  }
+}
