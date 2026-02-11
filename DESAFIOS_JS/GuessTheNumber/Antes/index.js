@@ -45,11 +45,11 @@ function compareNumbers(){
     
 
     if (userNUmber < computerNumber) {
-        document.getElementById("textOutput").innerHTML = "MENOR";
+        document.getElementById("textOutput").innerHTML = "SEU NUMERO É MENOR";
         document.getElementById("inputBox").value = ''
     } 
     else if (userNUmber > computerNumber) {
-        document.getElementById("textOutput").innerHTML = "MAIOR";
+        document.getElementById("textOutput").innerHTML = "SEU NUMERO É MAIOR";
         document.getElementById("inputBox").value = ''
     } 
     else {
