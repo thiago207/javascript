@@ -84,27 +84,33 @@ document
   .addEventListener("click", depositar);
 
   
-function transferir(){
-    const origemid = Number(document.getElementById("origemId").value)
-    const destinoid = Number(document.getElementById("destinoId").value)
-    const valorTransferencia = Number(document.getElementById("transferenciaValor").value)
+function transferir() {
+    const origemid = Number(document.getElementById("origemId").value);
+    const destinoid = Number(document.getElementById("destinoId").value);
+    const valorTransferencia = Number(document.getElementById("transferenciaValor").value);
 
     let contaOrigem = null;
     let contaDestino = null;
 
-    for (let i = 0; i < contas.length; i++){
-        if (contas[i].id == origemid){
-            contaOrigem = contas[i].id
+    for (let i = 0; i < contas.length; i++) {
+        if (contas[i].id === origemid) {
+        contaOrigem = contas[i]; // OBJETO
         }
     }
-    for (let i = 0; i < contas.length; i++){
-        if (contas[i].id == destinoid){
-            contaDestino = contas[i].id
+
+    for (let i = 0; i < contas.length; i++) {
+        if (contas[i].id === destinoid) {
+        contaDestino = contas[i]; // OBJETO
         }
     }
 
     if (!contaOrigem || !contaDestino) {
         alert("Conta não encontrada");
+        return;
+    }
+
+    if (valorTransferencia <= 0) {
+        alert("Valor inválido");
         return;
     }
 
@@ -116,9 +122,7 @@ function transferir(){
     contaOrigem.saldo -= valorTransferencia;
     contaDestino.saldo += valorTransferencia;
 
-    exibirContas()
-
-
+    exibirContas();
 }
 
 document
