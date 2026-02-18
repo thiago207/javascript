@@ -94,8 +94,9 @@ document.getElementById("service-previous").onclick = function () {
 
 // Data Footer
 
+let data_atual = new Date;
 
-
+document.getElementById("current_year").innerHTML = data_atual.getFullYear()
   
    
 

@@ -298,27 +298,53 @@
                 <hr></hr>
                 </div>
                 
+        
+            <form action="https://postmail.invotes.com/send"
+                method="post" id="email_form">
 
-                <div class="contact-form small-12 medium-10 large-6 columns no-padding small-centered">
+                <input type="text" name="extra_name"
+                            placeholder="Nome" />
+                            <input type="text" name="extra_email"
+                            placeholder="E-mail" />
+                <input type="text" name="subject" placeholder="Assunto" />
+                <textarea name="text" placeholder="Mensagem"></textarea>
+                <input type="hidden" name="access_token" value="4fdqvb4p74bch7l77ijaf8pd" />
+                <!-- return urls can be fully qualified -OR-
+                    start with / for root relative -OR-
+                    start with . for url relative --> 
+                <input type="hidden" name="success_url" value="www.google.com" />
+                <input type="hidden" name="error_url" value=".?message=Email+could+not+be+sent.&isError=1" />
+            
 
-                    <form id="email_form">
+                <!-- set the reply-to address -->
+                <!-- <input type="text" name="reply_to"
+                            placeholder="Your Email" /> -->
 
-                        <input type="text" name="subject" class="field" placeholder="Nome completo"/>
-                            
-                        <input type="text" name="extra_email" class="field" placeholder="E-mail"/>
-                        
-                        <textarea type="text" name="text" class="field" placeholder="Mensagem"></textarea>
-                    
-                        <input id="submit_form" type="submit" value="Enviar" />
-                        
-                    </form>
+                <!-- to append extra fields, use the extra_ prefix.
+                    Entries will be appended to your message body. -->
+                <!-- <input type="text" name="extra_phone_number"
+                            placeholder="Phone Number" /> -->
 
-                </div>
+                <!-- to split your message into 160 chars
+                    for an sms gateway -->
+                <!-- <input type="hidden"
+                            name="sms_format" value="true" /> -->
+            
+                <input id="submit_form" type="submit" value="Enviar" />
 
-            </div>
-        </div>
-
-
+            </form>
+                
+            <!-- optional, prevents the submit button from being pressed more than once -->
+            <script>
+                var submitButton = document.getElementById("submit_form");
+                var form = document.getElementById("email_form");
+                form.addEventListener("submit", function (e) {
+                    setTimeout(function() {
+                        submitButton.value = "Sending...";
+                        submitButton.disabled = true;
+                    }, 1);
+                });
+            </script> 
 
         <footer id="footer" class="small-12 columns no-padding">
 
