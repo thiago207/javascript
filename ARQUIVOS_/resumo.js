@@ -156,3 +156,68 @@ window.setInterval(function () {
     document.getElementById("relogio").innerHTML =
         `${horas}:${minutos}:${segundos}`;
 }, 1000);
+
+
+
+/* =====================================================
+   FORMULÁRIOS — Select, Radio Buttons e Checkboxes
+   Manipulação de opções selecionadas pelo usuário
+   ===================================================== */
+
+
+/* -----------------------------
+   SELECT BOX
+   Captura a opção escolhida em um <select>
+------------------------------ */
+
+document.getElementById("mostrar_opcao").onclick = function () {
+    let campo_select = document.getElementById("options");
+    let indice_selecionado = campo_select.selectedIndex;
+    let valor_selecionado = campo_select[indice_selecionado].text;
+
+    document.getElementById("opcao_selecionada").innerHTML =
+        valor_selecionado;
+};
+
+
+
+/* -----------------------------
+   RADIO BUTTONS
+   Identifica qual opção única foi marcada
+------------------------------ */
+
+document.getElementById("mostrar_radio").onclick = function () {
+    var radio = document.getElementsByName("genero");
+    var radio_selected = "";
+
+    for (let i = 0; i < radio.length; i++) {
+        if (radio[i].checked) {
+            radio_selected = radio[i].value;
+            break;
+        }
+    }
+
+    document.getElementById("radio_selecionado").innerHTML =
+        radio_selected;
+};
+
+
+
+/* -----------------------------
+   CHECKBOXES
+   Lista múltiplas opções marcadas
+------------------------------ */
+
+document.getElementById("mostrar_check").onclick = function () {
+    var check = document.getElementsByName("interesse");
+    var lista = document.getElementById("check_selecionado");
+
+    // Limpa antes de montar novamente
+    lista.innerHTML = "";
+
+    for (let i = 0; i < check.length; i++) {
+        if (check[i].checked) {
+            lista.innerHTML += "<li>" + check[i].value + "</li>";
+        }
+    }
+};
