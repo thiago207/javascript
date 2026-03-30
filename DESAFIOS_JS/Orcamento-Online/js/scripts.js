@@ -117,7 +117,7 @@ $(function(){
         $("#qualidade .option-button").removeClass("selected");
         $("#qualidade #" + params.qualidade).addClass("selected");
     }
-
+    
     function mostrar_detalhes(total, foto){
         var gola =  $("#gola .selected").text();
         var cor =  $("#cor .selected").text();

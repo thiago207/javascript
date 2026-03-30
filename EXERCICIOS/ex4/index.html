@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <script src="jquery.js"></script>  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TODO PRO</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0d0d0d;
+      --surface:  #141414;
+      --border:   #252525;
+      --accent:   #e8ff47;
+      --accent2:  #ff6b35;
+      --text:     #f0f0f0;
+      --muted:    #555;
+      --done-bg:  #161a10;
+      --done-txt: #3d4a1a;
+      --radius:   4px;
+      --mono:     'IBM Plex Mono', monospace;
+      --sans:     'IBM Plex Sans', sans-serif;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 16px 80px;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 39px, #1a1a1a 39px, #1a1a1a 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, #1a1a1a 39px, #1a1a1a 40px);
+    }
+
+    /* ── HEADER ── */
+    header {
+      width: 100%;
+      max-width: 680px;
+      margin-bottom: 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 72px;
+      line-height: 1;
+      letter-spacing: 2px;
+      color: var(--accent);
+      text-shadow: 4px 4px 0 #2e3300;
+      user-select: none;
+    }
+    .logo span { color: var(--accent2); }
+    .stats {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      text-align: right;
+      line-height: 1.8;
+    }
+    .stats b { color: var(--accent); }
+
+    /* ── INPUT AREA ── */
+    .add-box {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+    }
+    .add-box input {
+      flex: 1;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      padding: 14px 18px;
+      outline: none;
+      transition: border-color .2s;
+      border-radius: var(--radius);
+    }
+    .add-box input::placeholder { color: var(--muted); }
+    .add-box input:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(232,255,71,.08); }
+
+    .btn-add {
+      background: var(--accent);
+      color: #0d0d0d;
+      border: none;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: 1px;
+      padding: 0 28px;
+      cursor: pointer;
+      border-radius: var(--radius);
+      transition: background .15s, transform .1s;
+      white-space: nowrap;
+    }
+    .btn-add:hover { background: #d4eb30; }
+    .btn-add:active { transform: scale(.97); }
+
+    /* ── FILTERS ── */
+    .filters {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .filter-btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 2px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active {
+      background: var(--accent);
+      color: #0d0d0d;
+      border-color: var(--accent);
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      width: 100%;
+      max-width: 680px;
+      margin-bottom: 24px;
+    }
+    .progress-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .progress-bar {
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), #b8d900);
+      border-radius: 2px;
+      transition: width .4s ease;
+      width: 0%; /* TODO: atualizar via JS */
+    }
+
+    /* ── TASK LIST ── */
+    .task-list {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* ── TASK ITEM ── */
+    .task-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--border);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      transition: border-color .2s, background .2s, opacity .3s;
+      animation: slideIn .25s ease both;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .task-item:hover { border-color: #333; }
+
+    /* Adicione a classe "done" no .task-item quando concluída */
+    .task-item.done {
+      background: var(--done-bg);
+      border-left-color: #2d3d10;
+      opacity: .7;
+    }
+
+    /* ── CHECKBOX ── */
+    .task-check {
+      width: 20px; height: 20px;
+      border: 2px solid var(--muted);
+      border-radius: 3px;
+      flex-shrink: 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .15s;
+    }
+    .task-check:hover { border-color: var(--accent); }
+    .task-item.done .task-check {
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+    .task-check::after {
+      content: '';
+      width: 5px; height: 9px;
+      border-right: 2px solid #0d0d0d;
+      border-bottom: 2px solid #0d0d0d;
+      transform: rotate(45deg) translateY(-1px);
+      opacity: 0;
+      transition: opacity .15s;
+    }
+    .task-item.done .task-check::after { opacity: 1; }
+
+    /* ── TEXTO DA TAREFA ── */
+    .task-text {
+      flex: 1;
+      font-family: var(--mono);
+      font-size: 13.5px;
+      color: var(--text);
+      word-break: break-word;
+      transition: color .2s;
+      outline: none;
+    }
+    .task-item.done .task-text {
+      color: var(--done-txt);
+      text-decoration: line-through;
+    }
+    /* Adicione a classe "editing" no .task-text ao entrar em modo de edição */
+    .task-text.editing {
+      border-bottom: 1px dashed var(--accent);
+      color: var(--accent) !important;
+      text-decoration: none !important;
+      cursor: text;
+    }
+
+    /* ── TAG DE STATUS ── */
+    .task-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 2px;
+      text-transform: uppercase;
+      letter-spacing: .07em;
+      white-space: nowrap;
+      background: #1c1a0a;
+      color: #6b5e1a;
+    }
+    .task-item.done .task-tag {
+      background: #1e2410;
+      color: #4e6020;
+    }
+
+    /* ── BOTÕES DE AÇÃO ── */
+    .task-actions { display: flex; gap: 6px; }
+    .task-btn {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 11px;
+      padding: 4px 10px;
+      cursor: pointer;
+      border-radius: 2px;
+      transition: all .15s;
+      white-space: nowrap;
+    }
+    .task-btn.edit-btn:hover  { border-color: var(--accent);  color: var(--accent); }
+    .task-btn.del-btn:hover   { border-color: var(--accent2); color: var(--accent2); }
+    .task-btn.save-btn        { border-color: var(--accent);  color: var(--accent); }
+
+    /* ── EMPTY STATE ── */
+    .empty {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 60px 0;
+      color: var(--muted);
+    }
+    /* O JS adiciona a classe "show" quando não há tarefas visíveis */
+    .empty.show { display: flex; }
+    .empty-icon { font-size: 48px; opacity: .3; }
+    .empty p { font-family: var(--mono); font-size: 13px; }
+
+    /* ── BOTTOM BAR ── */
+    .bottom-bar {
+      width: 100%;
+      max-width: 680px;
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+    .btn-clear {
+      font-family: var(--mono);
+      font-size: 11px;
+      background: none;
+      border: 1px solid #2a1a1a;
+      color: #4a2020;
+      padding: 6px 16px;
+      border-radius: 2px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .btn-clear:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">TODO<span>PRO</span></div>
+    <div class="stats">
+      <div>TOTAL &nbsp;<b id="total">0</b></div>
+      <div>FEITAS &nbsp;<b id="done-count">0</b></div>
+      <div>PENDENTES &nbsp;<b id="pending-count">0</b></div>
+    </div>
+  </header>
+
+  <div class="add-box">
+    <input type="text" id="new-task-input" placeholder="Nova tarefa…" maxlength="120"/>
+    <button class="btn-add" id="add-btn">+ ADD</button>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>PROGRESSO</span>
+      <span id="pct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all">Todas</button>
+    <button class="filter-btn" data-filter="pending">Pendentes</button>
+    <button class="filter-btn" data-filter="done">Concluídas</button>
+  </div>
+
+  <!-- O JS vai renderizar os itens aqui -->
+  <div class="task-list" id="task-list">
+
+    <!--
+    ╔══════════════════════════════════════════════════╗
+    ║  MODELO DE UM ITEM — use como referência no JS  ║
+    ╚══════════════════════════════════════════════════╝
+
+    <div class="task-item">
+      <div class="task-check"></div>
+      <span class="task-text">Texto da tarefa aqui</span>
+      <span class="task-tag">todo</span>
+      <div class="task-actions">
+        <button class="task-btn edit-btn">✎ Edit</button>
+        <button class="task-btn del-btn">✕</button>
+      </div>
+    </div>
+
+    ► Tarefa concluída  → adicione "done" no .task-item
+    ► Modo edição       → adicione "editing" no .task-text
+                          e troque os botões por:
+                          <button class="task-btn save-btn">✓ Salvar</button>
+                          <button class="task-btn del-btn">✕</button>
+    -->
+
+  </div>
+
+  <div class="empty" id="empty-state">
+    <div class="empty-icon">◻</div>
+    <p>Nenhuma tarefa aqui.</p>
+  </div>
+
+  <div class="bottom-bar">
+    <button class="btn-clear" id="clear-done">Limpar concluídas</button>
+  </div>
+
+  <!--
+  ================================================================
+   ROTEIRO DE IMPLEMENTAÇÃO — complete na ordem abaixo:
+
+   1. Declare um array `tasks` e uma chave para o localStorage
+   2. Crie funções save() e load() para persistir o array
+   3. Crie a função render() — lê o array e gera os .task-item
+   4. Adicionar tarefa: evento no #add-btn e tecla Enter no input
+   5. Marcar/desmarcar: clique no .task-check alterna t.done
+   6. Excluir: clique no .del-btn remove o item do array
+   7. Editar: clique no .edit-btn ativa contentEditable no .task-text
+   8. Salvar edição: clique no .save-btn persiste o novo texto
+   9. Filtros: clique nos .filter-btn refiltra o que render() exibe
+  10. Stats: atualize #total, #done-count, #pending-count no render()
+  11. Progresso: calcule % e ajuste #progress-fill e #pct no render()
+  12. Limpar concluídas: #clear-done filtra tasks onde done === false
+  ================================================================
+  -->
+  <script src="script.js"> </script>
+
+</body>
+</html>
